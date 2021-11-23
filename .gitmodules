@@ -1,0 +1,3 @@
+[submodule "proto/Faceberry.Proto"]
+	path = proto/Faceberry.Proto
+	url = https://github.com/Smart-Meal-Service/Faceberry.Proto
