@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Grpc.Net.Client" Version="2.38.0" />
+		<PackageReference Include="System.Drawing.Common" Version="5.0.0" />
+		<PackageReference Include="Google.Api.CommonProtos" Version="2.3.0" />
+		<PackageReference Include="Google.Protobuf" Version="3.17.3" />
+		<PackageReference Include="Grpc" Version="2.38.1" />
+		<PackageReference Include="Grpc.Auth" Version="2.38.1" />
+		<PackageReference Include="Grpc.Core" Version="2.38.1" />
+		<PackageReference Include="Grpc.Core.Api" Version="2.38.1" />
+		<PackageReference Include="Grpc.Tools" Version="2.38.1">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+
+	<ItemGroup>
+		<Protobuf Include="..\..\proto\Faceberry.Proto\proto\Units.proto" Link="Protos\Units.proto" GrpcServices="None" />
+		<Protobuf Include="..\..\proto\Faceberry.Proto\proto\NotificationService.proto" Link="Protos\NotificationService.proto" GrpcServices="Both" />
+	</ItemGroup>
+
+</Project>
