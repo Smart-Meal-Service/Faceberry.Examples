@@ -34,7 +34,7 @@ namespace Faceberry.WPF
         public MainWindow()
         {
             _grpc = new NotificationServiceImplementation();
-            _server = GrpcExtensions.CreateServer(_grpc);
+            _server = GrpcExtensions.CreateServer(_grpc, 5080);
             _dispatcherTimer = new DispatcherTimer
             {
                 Interval = new TimeSpan(0, 0, 1),
@@ -83,7 +83,7 @@ namespace Faceberry.WPF
         /// <param name="e"></param>
         private void OnReceivedNotification(object sender, NotificationEventsArgs e)
         {
-            InvokeDrawing(e.FrameBytes, e.IdentificationUnitList); _fps++;
+            InvokeDrawing(e.FrameBytes, e.RecognitionUnitList); _fps++;
         }
 
         #endregion
@@ -94,16 +94,16 @@ namespace Faceberry.WPF
         /// Invoke drawing task.
         /// </summary>
         /// <param name="frameBytes">Frame bytes</param>
-        /// <param name="identificationUnitList">Identification unit list</param>
+        /// <param name="recognitionUnitList">Recognition unit list</param>
         /// <returns></returns>
-        private void InvokeDrawing(byte[] frameBytes, IdentificationUnitList identificationUnitList)
+        private void InvokeDrawing(byte[] frameBytes, RecognitionUnitList recognitionUnitList)
         {
             try
             {
                 using var ms = new MemoryStream(frameBytes);
                 using var frame = new Bitmap(ms);
                 using var pen = new Pen(Color.Silver, 2);
-                var identificationUnits = identificationUnitList.RecognitionUnit;
+                var identificationUnits = recognitionUnitList.RecognitionUnit;
                 var length = identificationUnits.Count;
 
                 for (var i = 0; i < length; i++)
@@ -132,7 +132,7 @@ namespace Faceberry.WPF
             }
             catch
             {
-
+                // log here
             }
         }
 
@@ -173,7 +173,7 @@ namespace Faceberry.WPF
                 }
                 catch
                 {
-
+                    // log here
                 }
             }, DispatcherPriority.Normal);
         }

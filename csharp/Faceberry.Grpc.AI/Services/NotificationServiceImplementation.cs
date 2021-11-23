@@ -21,27 +21,22 @@ namespace Faceberry.Grpc.AI
 
         #region Methods
 
-        /// <summary>
-        /// Returns bool value.
-        /// </summary>
-        /// <param name="request">Request</param>
-        /// <param name="context">Context</param>
-        /// <returns></returns>
-        public override Task<BoolValue> ReceiveFrame(IdentificationResult request, ServerCallContext context)
+        public override Task<Empty> ReceiveFrame(RecognitionResult request, ServerCallContext context)
         {
             try
             {
                 var frameBytes = request.Frame.ToByteArray();
                 var recognitionUnit = request.RecognitionUnitList;
 
-                OnReceivedNotification?.Invoke(this, 
+                OnReceivedNotification?.Invoke(this,
                     new NotificationEventsArgs(frameBytes, recognitionUnit));
 
-                return Task.FromResult(new BoolValue {Value = true});
+                return Task.FromResult(new Empty());
             }
             catch
             {
-                return Task.FromResult(new BoolValue {Value = false});
+                // log here
+                return Task.FromResult(new Empty());
             }
         }
 

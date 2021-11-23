@@ -13,11 +13,11 @@ namespace Faceberry.Grpc.AI.Events
         /// Initializes notification event arguments.
         /// </summary>
         /// <param name="frameBytes">Frame bytes</param>
-        /// <param name="inferenceResult">Inference result</param>
-        public NotificationEventsArgs(byte[] frameBytes, IdentificationUnitList identificationUnitList)
+        /// <param name="recognitionUnitList">Inference result</param>
+        public NotificationEventsArgs(byte[] frameBytes, RecognitionUnitList recognitionUnitList)
         {
             FrameBytes = frameBytes;
-            IdentificationUnitList = identificationUnitList;
+            RecognitionUnitList = recognitionUnitList;
         }
 
         #endregion
@@ -32,7 +32,7 @@ namespace Faceberry.Grpc.AI.Events
         /// <summary>
         /// Gets inference result.
         /// </summary>
-        public IdentificationUnitList IdentificationUnitList { get; private set; }
+        public RecognitionUnitList RecognitionUnitList { get; private set; }
 
         #endregion
     }
