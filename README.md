@@ -1,2 +1,2 @@
 # Faceberry.Examples
-FaceID integration examples.
+Faceberry (Face ID by SMS) integration examples.
