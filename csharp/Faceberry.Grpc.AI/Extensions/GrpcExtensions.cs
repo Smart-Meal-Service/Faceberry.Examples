@@ -1,4 +1,5 @@
 ﻿using Grpc.Core;
+using Grpc.Net.Client;
 using System;
 using System.Net;
 using System.Net.Sockets;
@@ -16,7 +17,7 @@ namespace Faceberry.Grpc.AI.Extensions
         /// <param name="grpc">Notification service implementation</param>
         /// <param name="port">Port</param>
         /// <returns>Server</returns>
-        public static Server CreateServer(NotificationServiceImplementation grpc, int port = 5090)
+        public static Server CreateServer(NotificationServiceImplementation grpc, int port = 5080)
         {
             var credentials = ServerCredentials.Insecure;
             AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
@@ -33,6 +34,27 @@ namespace Faceberry.Grpc.AI.Extensions
             };
 
             return _grpcServer;
+        }
+
+        /// <summary>
+        /// Creates gRRC client channel.
+        /// </summary>
+        /// <param name="port">Port</param>
+        /// <returns>GrpcChannel</returns>
+        public static GrpcChannel CreateClientChannel(int port = 5070)
+        {
+            var host = GetDefaultHostAddress();
+            var clientPort = port;
+
+            AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
+            var address = $"http://{host}:{clientPort}";
+
+            var grpcChannelOptions = new GrpcChannelOptions
+            {
+                Credentials = ChannelCredentials.Insecure
+            };
+
+            return GrpcChannel.ForAddress(address, grpcChannelOptions);
         }
 
         /// <summary>

@@ -21,7 +21,8 @@
 
 	<ItemGroup>
 		<Protobuf Include="..\..\proto\Faceberry.Proto\proto\Units.proto" Link="Protos\Units.proto" GrpcServices="None" />
-		<Protobuf Include="..\..\proto\Faceberry.Proto\proto\NotificationService.proto" Link="Protos\NotificationService.proto" GrpcServices="Both" />
+		<Protobuf Include="..\..\proto\Faceberry.Proto\proto\NotificationService.proto" Link="Protos\NotificationService.proto" GrpcServices="Server" />
+    <Protobuf Include="..\..\proto\Faceberry.Proto\proto\RequestService.proto" Link="Protos\RequestService.proto" GrpcServices="Client" />
 	</ItemGroup>
 
 </Project>

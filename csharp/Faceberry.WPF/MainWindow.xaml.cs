@@ -2,6 +2,7 @@
 using Faceberry.Grpc.AI.Events;
 using Faceberry.Grpc.AI.Extensions;
 using Grpc.Core;
+using Grpc.Net.Client;
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -19,9 +20,13 @@ namespace Faceberry.WPF
     {
         #region Private data
 
-        private readonly DispatcherTimer _dispatcherTimer;
+        private readonly GrpcChannel _channel;
+        private readonly RequestService.RequestServiceClient _client;
+
         private readonly NotificationServiceImplementation _grpc;
         private readonly Server _server;
+
+        private readonly DispatcherTimer _dispatcherTimer;
         private int _fps;
 
         #endregion
@@ -33,8 +38,12 @@ namespace Faceberry.WPF
         /// </summary>
         public MainWindow()
         {
+            _channel = GrpcExtensions.CreateClientChannel(5070);
+            _client = new RequestService.RequestServiceClient(_channel);
+
             _grpc = new NotificationServiceImplementation();
             _server = GrpcExtensions.CreateServer(_grpc, 5080);
+
             _dispatcherTimer = new DispatcherTimer
             {
                 Interval = new TimeSpan(0, 0, 1),
