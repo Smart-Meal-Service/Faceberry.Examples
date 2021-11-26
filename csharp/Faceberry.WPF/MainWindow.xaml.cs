@@ -1,6 +1,7 @@
 ﻿using Faceberry.Grpc.AI;
 using Faceberry.Grpc.AI.Events;
 using Faceberry.Grpc.AI.Extensions;
+using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using Grpc.Net.Client;
 using System;
@@ -18,7 +19,7 @@ namespace Faceberry.WPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        #region Private data
+        #region Fields
 
         private readonly GrpcChannel _channel;
         private readonly RequestService.RequestServiceClient _client;
@@ -66,9 +67,12 @@ namespace Faceberry.WPF
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             _dispatcherTimer.Start();
+
+            await _client.EnableRecognitionAsync(new BoolValue { Value = true });
+
             _grpc.OnReceivedNotification += OnReceivedNotification;
             _server.Start();
         }
@@ -81,6 +85,10 @@ namespace Faceberry.WPF
         private async void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             _dispatcherTimer.Stop();
+
+            await _client.EnableRecognitionAsync(new BoolValue { Value = false });
+            _channel.Dispose();
+
             _grpc.OnReceivedNotification -= OnReceivedNotification;
             await _server.ShutdownAsync();
         }
