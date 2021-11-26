@@ -1,8 +1,8 @@
-# Faceberry.Examples
-Faceberry (Face ID by SMS) integration examples.
+<p align="center"><img width="15%" src="docs/logo.png" /></p>
+<p align="center">Faceberry integration examples</p>
 
 # Languages
-[.NET](csharp)
+[C#](csharp)
 
 # License
 MIT
